@@ -24,5 +24,10 @@ import com.neum.start.services.ProudctService;
 		
 	    return ResponseEntity.ok( proudctService.getProducts());
 	  }
+	 @GetMapping("/reviews")
+	  public ResponseEntity<List<Product>> getReviews() {
+		
+	    return ResponseEntity.ok( proudctService.getProducts());
+	  }
 
 }
