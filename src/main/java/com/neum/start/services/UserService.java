@@ -60,7 +60,6 @@ public class UserService {
 	   CreateCustomer cc=new CreateCustomer();
 	User newUser=  createUser(customer.getUser());
 	   Customer c = new Customer();
-	   newUser.setPassword(null);
 	   c.setUserId(newUser.getId());
 	   Customer newC= customerRepository.save(c);
 	 List<Address> addressList=   customer.getUser().getAddress();
@@ -91,7 +90,6 @@ public class UserService {
 			 addressList.forEach(a->a.setUser(newUser));
 			 addressList.forEach(a->saveAddress(a));
 		   }	
-	   newUser.setPassword(null);
 	   csp.setUser(newUser);
 	   csp.setService(newM.getId());
 	   return csp;
