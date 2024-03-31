@@ -7,16 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.neum.start.model.Address;
 import com.neum.start.model.Customer;
 import com.neum.start.model.MService;
 import com.neum.start.model.User;
 import com.neum.start.model.Product;
+import com.neum.start.model.Review;
 import com.neum.start.model.ServiceProvider;
 import com.neum.start.model.dto.CreateCustomer;
 import com.neum.start.model.dto.CreateServiceProvider;
+import com.neum.start.repository.AddressRepository;
 import com.neum.start.repository.CustomerRepository;
 import com.neum.start.repository.MServiceRepository;
 import com.neum.start.repository.ProductRepository;
+import com.neum.start.repository.ReviewsRepository;
 import com.neum.start.repository.ServiceProviderRepository;
 import com.neum.start.repository.UserRepository;
 
@@ -34,6 +38,11 @@ public class UserService {
         private	ProductRepository proRepositry;
 	   @Autowired
 	    private MServiceRepository mServiceRepository;
+	   @Autowired
+	   private AddressRepository addressRepository;
+	   
+	   @Autowired
+	   private ReviewsRepository reviewsRepository;
 	    
 	    public User createUser(User request) {
 	    	 User user = new User();
@@ -47,14 +56,27 @@ public class UserService {
 	         // Save the user to the database
 	       return userRepository.save(user);       
 	    }
-   public void createCustomer(CreateCustomer customer) {
+   public CreateCustomer createCustomer(CreateCustomer customer) {
+	   CreateCustomer cc=new CreateCustomer();
 	User newUser=  createUser(customer.getUser());
 	   Customer c = new Customer();
+	   newUser.setPassword(null);
 	   c.setUserId(newUser.getId());
-	   customerRepository.save(c);	   
+	   Customer newC= customerRepository.save(c);
+	 List<Address> addressList=   customer.getUser().getAddress();
+	 if(addressList!=null) {
+		 addressList.forEach(a->a.setUser(newUser));
+		 addressList.forEach(a->saveAddress(a));
+		 
+	   }	   
+	   cc.setUser(newUser);
+	   cc.setCustomer(newC);
+	   return cc;
+	   
    }
    
-   public void createServiceProvider(CreateServiceProvider request) {
+   public CreateServiceProvider createServiceProvider(CreateServiceProvider request) {
+	   CreateServiceProvider csp= new CreateServiceProvider();
 	   User newUser=createUser(request.getUser());
 	   ServiceProvider sp =new ServiceProvider();
 	   sp.setUserId(newUser.getId());
@@ -63,12 +85,30 @@ public class UserService {
 	   MService m= new MService();
 	   m.setServiceProvider(newsp);
 	   m.setService(s.get());
-	   mServiceRepository.save(m);   
+	   MService newM = mServiceRepository.save(m); 
+	   List<Address> addressList=   request.getUser().getAddress();
+		 if(addressList!=null) {
+			 addressList.forEach(a->a.setUser(newUser));
+			 addressList.forEach(a->saveAddress(a));
+		   }	
+	   newUser.setPassword(null);
+	   csp.setUser(newUser);
+	   csp.setService(newM.getId());
+	   return csp;
    }
    
    public List<ServiceProvider> getServiceProvider(){
 		return	serviceProviderRepository.findAll();
 		}
+        
+   public void saveReview(Review review) {
+	   reviewsRepository.save(review);
+   }
+   
+   public Address saveAddress(Address address) {
+	   return addressRepository.save(address);
+	   
+   }
    
 	    
 	    

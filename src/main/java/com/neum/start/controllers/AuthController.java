@@ -34,8 +34,7 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService userService;
+   
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginRequestDto userLogin) {
@@ -55,17 +54,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
 
          }
-    @PostMapping("/new-customer")
-    ResponseEntity<?> createCustomer(@RequestBody CreateCustomer request) {
-    	userService.createCustomer(request);
-         return new ResponseEntity<Object>("ok", HttpStatus.OK);
-        
-    }
-    @PostMapping("/new-service-provider")
-    ResponseEntity<?> createServiceProvider(@RequestBody CreateServiceProvider request) {
-    	userService.createServiceProvider(request);
-         return new ResponseEntity<Object>(request, HttpStatus.OK);
-    }
+   
 }
     
 

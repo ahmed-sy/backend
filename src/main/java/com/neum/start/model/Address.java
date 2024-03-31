@@ -49,6 +49,12 @@ public class Address {
 	
 	@Column(name="plz")
 	private String plz;
+	
+	@Column(name="latitude")
+	private String latitude;
+	
+	@Column(name="longitude")
+	private String longitude;
     
 
 }

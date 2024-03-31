@@ -13,19 +13,19 @@ import com.neum.start.model.Product;
 import com.neum.start.services.ProudctService;
 
 @RestController
- @RequestMapping("/api/v1")
+ @RequestMapping("/api/v1/auth")
  @Validated
  public class ProductController {
 	@Autowired
 	 private ProudctService proudctService;
 	 
 	 @GetMapping("/products")
-	  public ResponseEntity<List<Product>> getProducts() {
+	  public ResponseEntity<List<Product>>Products() {
 		
 	    return ResponseEntity.ok( proudctService.getProducts());
 	  }
 	 @GetMapping("/reviews")
-	  public ResponseEntity<List<Product>> getReviews() {
+	  public ResponseEntity<List<Product>> Reviews() {
 		
 	    return ResponseEntity.ok( proudctService.getProducts());
 	  }

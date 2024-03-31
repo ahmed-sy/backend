@@ -1,5 +1,6 @@
 package com.neum.start.model.dto;
 
+import com.neum.start.model.Address;
 import com.neum.start.model.ServiceProvider;
 import com.neum.start.model.User;
 
