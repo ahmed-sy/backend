@@ -8,10 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import com.neum.start.model.MService;
 import com.neum.start.model.Product;
+import com.neum.start.model.ServiceProvider;
 
 @Repository
 public interface MServiceRepository extends JpaRepository<MService, Long> {
 	
 	@Query("FROM MService ms WHERE ms.service=:product")
-	public List<MService> getbyProductId(Product product );
+	public List<MService> findByProductId(Product product );
+	
+	@Query("FROM MService ms WHERE ms.serviceProvider=:serviceProvider")
+	public List<MService> findByServiceProvider(ServiceProvider serviceProvider );
 }

@@ -2,6 +2,10 @@ package com.neum.start.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,7 +41,7 @@ public class User {
 	@Column(name="password")
     private	String password;
 	
-	@Column(name="email")
+	@Column(name="email", unique=true)
     private	String email;
 
 	
@@ -49,10 +53,7 @@ public class User {
 	 @Enumerated(EnumType.STRING)
 	  private Role role;
 	
-	 @OneToMany(mappedBy = "user")
+	 @OneToMany(mappedBy ="user",orphanRemoval = true)
 	 private List<Address> address;
 	
-    
-
-
 }

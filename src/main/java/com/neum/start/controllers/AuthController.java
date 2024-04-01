@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.neum.start.model.User;
 import com.neum.start.model.dto.AuthResponseDto;
 import com.neum.start.model.dto.CreateCustomer;
 import com.neum.start.model.dto.CreateServiceProvider;
@@ -46,7 +48,7 @@ public class AuthController {
          SecurityContextHolder.getContext().setAuthentication(authentication);
 
          AuthUser userDetails = (AuthUser) authentication.getPrincipal();
-
+         User user=    userDetails.getUser();
 
          log.info("Token requested for user :{}", authentication.getAuthorities());
          String token = authService.generateToken(authentication);

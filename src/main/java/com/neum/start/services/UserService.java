@@ -1,5 +1,6 @@
 package com.neum.start.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +14,15 @@ import com.neum.start.model.MService;
 import com.neum.start.model.User;
 import com.neum.start.model.Product;
 import com.neum.start.model.Review;
+import com.neum.start.model.Role;
 import com.neum.start.model.ServiceProvider;
+import com.neum.start.model.dto.AdressDto;
 import com.neum.start.model.dto.CreateCustomer;
 import com.neum.start.model.dto.CreateServiceProvider;
+import com.neum.start.model.dto.MServiceDto;
+import com.neum.start.model.dto.ServiceProviderDto;
+import com.neum.start.model.dto.UserDetailsResponse;
+import com.neum.start.model.dto.UserDto;
 import com.neum.start.repository.AddressRepository;
 import com.neum.start.repository.CustomerRepository;
 import com.neum.start.repository.MServiceRepository;
@@ -60,7 +67,7 @@ public class UserService {
 	   CreateCustomer cc=new CreateCustomer();
 	User newUser=  createUser(customer.getUser());
 	   Customer c = new Customer();
-	   c.setUserId(newUser.getId());
+	   c.setUser(newUser);
 	   Customer newC= customerRepository.save(c);
 	 List<Address> addressList=   customer.getUser().getAddress();
 	 if(addressList!=null) {
@@ -78,7 +85,7 @@ public class UserService {
 	   CreateServiceProvider csp= new CreateServiceProvider();
 	   User newUser=createUser(request.getUser());
 	   ServiceProvider sp =new ServiceProvider();
-	   sp.setUserId(newUser.getId());
+	   sp.setUser(newUser);
 	   ServiceProvider newsp=  serviceProviderRepository.save(sp);
 	   Optional<Product> s =proRepositry.findById(request.getService());
 	   MService m= new MService();
@@ -107,7 +114,71 @@ public class UserService {
 	   return addressRepository.save(address);
 	   
    }
+   public UserDetailsResponse getUserAllDetails(User user) {
+	UserDetailsResponse udr= new UserDetailsResponse();
+    if(user!=null){
+	  udr.setCustomer(customerRepository.findByUser(user));
+	  udr.setUser(mappUserDto(user));
+	  ServiceProvider sp=serviceProviderRepository.findByUser(user);
+	  if(sp!=null) {
+		  udr.setSp(mappServiceProviderDto(sp));
+      }
+	  }
+	 return udr;
+  }
+
+
+public User getUserByEmail(String email) {
+	return userRepository.findByEmail(email).get();
+	
+}
    
+	    private UserDto mappUserDto(User user) {
+	    	UserDto ud= new UserDto();
+	    	List <AdressDto> adt=new ArrayList<AdressDto>();
+	    	ud.setFirstName(user.getFirstName());
+	    	ud.setLastName(user.getLastName());
+	    	ud.setEmail(user.getEmail());
+	    	ud.setRole(user.getRole());
+	    	ud.setType(user.getType());
+	    	ud.setId(user.getId());
+	    	user.getAddress().forEach(a->adt.add(mappAdressDto(a)));
+	    	ud.setAddress(adt);
+	    	
+			return ud;
+	    }
+	     
+	    private AdressDto mappAdressDto(Address adds) {
+	    	AdressDto adto=new AdressDto();
+	    	adto.setId(adds.getId());
+	    	adto.setHaus_number(adds.getHaus_number());
+	    	adto.setStreet(adds.getStreet());
+	    	adto.setCountry(adds.getCountry());
+	    	adto.setCountryCode(adds.getCountryCode());
+	    	adto.setPlz(adds.getPlz());
+	    	adto.setLatitude(adds.getLatitude());
+	    	adto.setLongitude(adds.getLongitude());
+	    	
+	    	return adto;
+	      	
+	    }
+	    private ServiceProviderDto mappServiceProviderDto(ServiceProvider sp) {
+	    	
+	    	ServiceProviderDto spd= new ServiceProviderDto();
+	    	spd.setId(sp.getId());
+	    	List<MServiceDto> msd= new ArrayList<MServiceDto>();
+	    	sp.getServices().forEach(s->msd.add(mappMServiceDto(s)));
+	    	spd.setServices(msd);
+			return spd;
+	    	
+	    }
+	    
+	    private MServiceDto mappMServiceDto(MService ms) {
+	    	MServiceDto msd= new MServiceDto();
+	    	msd.setId(ms.getId());
+	    	msd.setService(ms.getService());
+	    	return msd;
+	    }
 	    
 	    
 }

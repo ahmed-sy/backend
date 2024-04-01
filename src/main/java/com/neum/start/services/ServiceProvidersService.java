@@ -42,14 +42,14 @@ public class ServiceProvidersService {
 	
 	public List<ServiceProvidersResponse> getServiceProviders( long prod){
 		Optional<Product> produ=proRepositry.findById(prod);
-		List<MService> mServices=	mServiceRepository.getbyProductId( produ.get());
+		List<MService> mServices=	mServiceRepository.findByProductId( produ.get());
 		List<ServiceProvidersResponse> servicesProviderResponses=new ArrayList<ServiceProvidersResponse>();
 		List<Product> products=new ArrayList<Product>();
 
 		
 		for( MService ms : mServices) {
 			ServiceProvidersResponse spr=new ServiceProvidersResponse();
-			Optional<User> user =userRepository.findById(ms.getServiceProvider().getUserId());
+			Optional<User> user =userRepository.findById(ms.getServiceProvider().getUser().getId());
 			
 			products.add(produ.get());
 			spr.setFirstName(user.get().getFirstName());
