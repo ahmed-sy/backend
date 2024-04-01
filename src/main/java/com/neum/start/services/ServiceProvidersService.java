@@ -54,7 +54,7 @@ public class ServiceProvidersService {
 			products.add(produ.get());
 			spr.setFirstName(user.get().getFirstName());
 			spr.setLastName(user.get().getLastName());
-			spr.setFirstName(user.get().getEmail());
+			spr.setEmail(user.get().getEmail());
 			spr.setId(ms.getServiceProvider().getId());
 			spr.setProducts(products);
 			servicesProviderResponses.add(spr);
