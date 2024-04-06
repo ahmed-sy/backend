@@ -25,5 +25,7 @@ private String email;
 
 private List<Product> products;
 
+private AdressDto address;
+
 
 }
