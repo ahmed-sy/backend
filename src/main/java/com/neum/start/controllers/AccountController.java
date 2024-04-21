@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.neum.start.model.User;
 import com.neum.start.model.dto.UserDetailsResponse;
-import com.neum.start.securtiy.AuthUser;
 import com.neum.start.services.UserService;
 
 @RestController

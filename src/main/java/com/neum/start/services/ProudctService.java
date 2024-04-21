@@ -11,6 +11,7 @@ import com.neum.start.model.Product;
 import com.neum.start.model.Review;
 import com.neum.start.repository.ProductRepository;
 import com.neum.start.repository.ReviewsRepository;
+import com.neum.start.repository.ServiceProviderRepository;
 
 @Service
 public class ProudctService {
@@ -21,14 +22,17 @@ public class ProudctService {
 	 @Autowired
      private ReviewsRepository  reviewsRepository;
 	 
+	 @Autowired
+	 private ServiceProviderRepository serviceProviderRepository;
+	 
 	public List<Product> getProducts(){
 	return	proRepositry.findAll();
 	}
 	public Optional<Product> getProduct(long id){
 		return	proRepositry.findById(id);
 		}	
-	public List<Review> getServiceProviderReviwes(long ServiceProvider){
-		return	reviewsRepository.findAllForUser(ServiceProvider);
+	public List<Review> getServiceProviderReviwes(long serviceProvider){
+		return	reviewsRepository.findAllForUser(serviceProviderRepository.findById(serviceProvider).get());
 		}
 	
 }
