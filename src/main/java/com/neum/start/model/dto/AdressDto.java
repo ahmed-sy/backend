@@ -1,10 +1,5 @@
 package com.neum.start.model.dto;
 
-import java.util.List;
-
-import com.neum.start.model.Address;
-import com.neum.start.model.Role;
-import com.neum.start.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

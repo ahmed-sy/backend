@@ -1,10 +1,8 @@
 package com.neum.start.controllers;
 
-import java.util.logging.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,12 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.neum.start.model.User;
 import com.neum.start.model.dto.AuthResponseDto;
-import com.neum.start.model.dto.CreateCustomer;
-import com.neum.start.model.dto.CreateServiceProvider;
 import com.neum.start.model.dto.LoginRequestDto;
 import com.neum.start.securtiy.AuthService;
 import com.neum.start.securtiy.AuthUser;
-import com.neum.start.services.UserService;
 
 @RestController
 @RequestMapping("/api/v1/auth")

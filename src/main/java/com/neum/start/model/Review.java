@@ -1,5 +1,6 @@
 package com.neum.start.model;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,16 +31,13 @@ public class Review {
     private	String comment;
 	
 	   @ManyToOne
-	   @JoinColumn(name="service_provider")
-	   private	ServiceProvider serviceProvider;	
+	   @JoinColumn(name="reviewed")
+	   private	User reviewed;	
 	    
 	    @ManyToOne
-	    @JoinColumn(name="customer")
-	    private	Customer customer;
+	    @JoinColumn(name="reviewer")
+	    private	User reviewer;
 	    
-	    @ManyToOne
-	    @JoinColumn(name="reviewer_id")
-	    private	User user;
-	    
+	   
 	    
 }

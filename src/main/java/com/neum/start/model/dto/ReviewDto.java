@@ -1,6 +1,7 @@
 package com.neum.start.model.dto;
 
 import com.neum.start.model.Customer;
+import com.neum.start.model.Review;
 import com.neum.start.model.ServiceProvider;
 import com.neum.start.model.User;
 
@@ -26,12 +27,18 @@ public class ReviewDto {
     private	String comment;
 	
 	 
-	 private ServiceProvider serviceProvider;	
+	 private long reviewed;	
 	    
 	    
-	 private Customer customer;
 	    
-	    
-	 private User user;
+	    	 
+	 
+
+	public ReviewDto(Review r) {
+		  this.id=r.getId();
+		  this.value=r.getValue();
+		  this.comment=r.getComment();	
+		  this.reviewed= r.getReviewed().getId();
+	}
 	    
 }

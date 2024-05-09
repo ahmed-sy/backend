@@ -28,7 +28,7 @@ public class Address {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private	Long id;	
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne()
     @JoinColumn(name="user_id", nullable=false)
     @JsonIgnoreProperties("user")
 	 User user;

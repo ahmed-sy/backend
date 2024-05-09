@@ -27,5 +27,8 @@ private List<Product> products;
 
 private AdressDto address;
 
+private List<ReviewDto> reviews;
+
+
 
 }

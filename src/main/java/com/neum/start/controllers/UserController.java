@@ -37,5 +37,8 @@ public class UserController {
 	    	Address address=	userService.saveAddress(request);
 	         return new ResponseEntity<Address>(address, HttpStatus.OK);
 	    }
+	  
+	    
+	   
 	
 }

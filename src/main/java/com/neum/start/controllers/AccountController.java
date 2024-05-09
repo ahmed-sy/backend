@@ -7,10 +7,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.neum.start.model.Review;
 import com.neum.start.model.User;
+import com.neum.start.model.dto.ReviewDto;
 import com.neum.start.model.dto.UserDetailsResponse;
 import com.neum.start.services.UserService;
 
@@ -27,8 +31,16 @@ public class AccountController {
          String userName = authentication.getName();
          User user=userService.getUserByEmail(userName);
          UserDetailsResponse userAllDetails=userService.getUserAllDetails(user);
+         
 	         return new ResponseEntity<UserDetailsResponse>(userAllDetails, HttpStatus.OK);
 	        
+	    }
+	  @PostMapping("/review")
+	    ResponseEntity<ReviewDto> userReview(@RequestBody ReviewDto request) {
+			 
+	    	  ReviewDto re=	userService.saveReview(request);
+	    	
+	         return new ResponseEntity<ReviewDto>(re, HttpStatus.OK);
 	    }
 
 }

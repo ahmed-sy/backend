@@ -20,6 +20,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDetailsResponse {
 	private UserDto user;
-	private Customer customer;
 	private ServiceProviderDto sp;
 }
