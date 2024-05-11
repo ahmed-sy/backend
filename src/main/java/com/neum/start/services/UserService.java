@@ -122,17 +122,16 @@ public class UserService {
    
    public Product addProduct(Product prod) {
 	   User user=getLogedUser();
-	   ServiceProvider sp2= new ServiceProvider(); 
 	   ServiceProvider sp=serviceProviderRepository.findByUser(user);
 	   Optional<Product> prod1=  proRepositry.findById(prod.getId());
 	   if(prod1.isPresent()) {
 	   if(sp==null) {
 		   ServiceProvider sp3= new ServiceProvider(); 
 		   sp3.setUser(user);
-		   sp2 = serviceProviderRepository.save(sp3);
+		   sp = serviceProviderRepository.save(sp3);
 	               }
 	   MService m= new MService();
-	   m.setServiceProvider(sp2);
+	   m.setServiceProvider(sp);
 	   m.setService(prod1.get());
 	   mServiceRepository.save(m); 
 	return prod1.get();
