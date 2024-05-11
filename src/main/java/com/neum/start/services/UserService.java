@@ -122,14 +122,17 @@ public class UserService {
    
    public Product addProduct(Product prod) {
 	   User user=getLogedUser();
+	   ServiceProvider sp2= new ServiceProvider(); 
 	   ServiceProvider sp=serviceProviderRepository.findByUser(user);
 	   Optional<Product> prod1=  proRepositry.findById(prod.getId());
 	   if(prod1.isPresent()) {
 	   if(sp==null) {
-		   sp = serviceProviderRepository.save(sp);
+		   ServiceProvider sp3= new ServiceProvider(); 
+		   sp3.setUser(user);
+		   sp2 = serviceProviderRepository.save(sp3);
 	               }
 	   MService m= new MService();
-	   m.setServiceProvider(sp);
+	   m.setServiceProvider(sp2);
 	   m.setService(prod1.get());
 	   mServiceRepository.save(m); 
 	return prod1.get();
@@ -248,9 +251,10 @@ public class UserService {
 	    	List<Address> adds=	addressRepositry.findByUser(user);
 			if(adds!=null &&adds.size()!=0) {
 			 ads= adds.get(0);
+			 newaddres.setId(ads.getId());
 			}
 	
-			return mapptoAdress(addressRepositry.save(ads));
+			return mapptoAdress(addressRepositry.save(newaddres));
 	    }
 	 private   AdressDto mapptoAdress(Address ads) {
 		 AdressDto adressDto= new AdressDto();
@@ -258,6 +262,7 @@ public class UserService {
 			adressDto.setStreet(ads.getStreet());
 			adressDto.setHaus_number(ads.getHaus_number());
 			adressDto.setCountry(ads.getCountry());
+			adressDto.setCity(ads.getCity());
 			adressDto.setPlz(ads.getPlz());
 			adressDto.setLatitude(ads.getLatitude());
 			adressDto.setLongitude(ads.getLongitude());
