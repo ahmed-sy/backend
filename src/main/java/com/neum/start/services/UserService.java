@@ -252,6 +252,7 @@ public class UserService {
 			if(adds!=null &&adds.size()!=0) {
 			 ads= adds.get(0);
 			 newaddres.setId(ads.getId());
+			 newaddres.setUser(user);
 			}
 	
 			return mapptoAdress(addressRepositry.save(newaddres));
