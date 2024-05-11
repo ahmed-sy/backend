@@ -21,6 +21,8 @@ import com.neum.start.model.ServiceProvider;
 import com.neum.start.model.dto.AdressDto;
 import com.neum.start.model.dto.CreateCustomer;
 import com.neum.start.model.dto.CreateServiceProvider;
+import com.neum.start.model.dto.Edit;
+import com.neum.start.model.dto.EditUser;
 import com.neum.start.model.dto.MServiceDto;
 import com.neum.start.model.dto.ReviewDto;
 import com.neum.start.model.dto.ServiceProviderDto;
@@ -111,6 +113,30 @@ public class UserService {
 	   return csp;
    }
    
+   public UserDto editUser(EditUser request) {
+       User user=getLogedUser();
+       user.setFirstName(request.getFirstName());
+       user.setLastName(request.getLastName());
+	return  mappUserDto(userRepository.save(user));
+   }
+   
+   public Product addProduct(Product prod) {
+	   User user=getLogedUser();
+	   ServiceProvider sp=serviceProviderRepository.findByUser(user);
+	   Optional<Product> prod1=  proRepositry.findById(prod.getId());
+	   if(prod1.isPresent()) {
+	   if(sp==null) {
+		   sp = serviceProviderRepository.save(sp);
+	               }
+	   MService m= new MService();
+	   m.setServiceProvider(sp);
+	   m.setService(prod1.get());
+	   mServiceRepository.save(m); 
+	return prod1.get();
+	   }else
+		   return null;
+   }
+   
    public List<ServiceProvider> getServiceProvider(){
 		return	serviceProviderRepository.findAll();
 		}
@@ -123,16 +149,17 @@ public class UserService {
 	   return addressRepository.save(request);
 	   
    }
-   public UserDetailsResponse getUserAllDetails(User user) {
-	UserDetailsResponse udr= new UserDetailsResponse();
-    if(user!=null){
-	  udr.setUser(mappUserDto(user));
-	  ServiceProvider sp=serviceProviderRepository.findByUser(user);
-	  if(sp!=null) {
+   public UserDetailsResponse getUserAllDetails() {
+       User user=getLogedUser();
+	   UserDetailsResponse udr= new UserDetailsResponse();
+       if(user!=null){
+	   udr.setUser(mappUserDto(user));
+	   ServiceProvider sp=serviceProviderRepository.findByUser(user);
+	   if(sp!=null) {
 		  udr.setSp(mappServiceProviderDto(sp));
-      }
-	  }
-	 return udr;
+        }
+	    }
+	   return udr;
   }
 
 
@@ -192,7 +219,6 @@ public class UserService {
 			return adressDto;
 		}
 	    
-	    
 	    public List<ReviewDto> getReviews(long userId){
 			List<ReviewDto> reviwes= new ArrayList<ReviewDto>();
 			
@@ -202,13 +228,11 @@ public class UserService {
 				revs.forEach(r->reviwes.add(new ReviewDto (r)));
 			}
 			
-			return reviwes;	
+			return reviwes;
 		}
 	    
 	    public Review mapReview(ReviewDto r) {
-	    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		      String userName = authentication.getName();
-	          User user=getUserByEmail(userName);
+	          User user=getLogedUser();
 	    	  Review re=new Review();
 	    	  re.setValue(r.getValue());
 	    	  re.setComment(r.getComment());
@@ -218,6 +242,38 @@ public class UserService {
 			return re;
 		}
 	    
+	    public AdressDto changeAddress(Address newaddres) {
+	    	User user= getLogedUser();
+	    	Address ads=new Address();
+	    	List<Address> adds=	addressRepositry.findByUser(user);
+			if(adds!=null &&adds.size()!=0) {
+			 ads= adds.get(0);
+			}
+	
+			return mapptoAdress(addressRepositry.save(ads));
+	    }
+	 private   AdressDto mapptoAdress(Address ads) {
+		 AdressDto adressDto= new AdressDto();
+		 adressDto.setId(ads.getId());
+			adressDto.setStreet(ads.getStreet());
+			adressDto.setHaus_number(ads.getHaus_number());
+			adressDto.setCountry(ads.getCountry());
+			adressDto.setPlz(ads.getPlz());
+			adressDto.setLatitude(ads.getLatitude());
+			adressDto.setLongitude(ads.getLongitude());
+			adressDto.setCountryCode(ads.getCountryCode());
+			
+			
+				return adressDto;
+	    }
+	    
+	public User getLogedUser() {
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	       String userName = authentication.getName();
+	     return getUserByEmail(userName);
+	}
+	
+	
 	    
 	    
 	    

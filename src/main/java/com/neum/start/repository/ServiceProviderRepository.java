@@ -13,7 +13,6 @@ import com.neum.start.model.User;
 public interface ServiceProviderRepository extends JpaRepository<ServiceProvider, Long> {
 	
 	@Query("FROM ServiceProvider a WHERE a.user=:user")
-	public ServiceProvider findByUser(User user );
-
+	public ServiceProvider findByUser(User user);
 
 }

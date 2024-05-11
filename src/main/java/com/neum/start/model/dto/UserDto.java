@@ -35,6 +35,7 @@ public class UserDto {
 	private Role role;
 	
 	private AdressDto address;
+	
 	private List<ReviewDto> reviews;
 		
 }
