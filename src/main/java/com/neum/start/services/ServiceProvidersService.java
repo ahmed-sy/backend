@@ -61,6 +61,7 @@ public class ServiceProvidersService {
 			spr.setFirstName(user.get().getFirstName());
 			spr.setLastName(user.get().getLastName());
 			spr.setEmail(user.get().getEmail());
+			spr.setUserId(user.get().getId());
 	                  	}
 			spr.setId(ms.getServiceProvider().getId());
 			spr.setProducts(products);

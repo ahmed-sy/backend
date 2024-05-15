@@ -29,6 +29,8 @@ private AdressDto address;
 
 private List<ReviewDto> reviews;
 
+private long userId;
+
 
 
 }
