@@ -183,8 +183,7 @@ public class UserService {
 	    	
 			return ud;
 	    }
-	     
-	    	
+	     	
 	    private ServiceProviderDto mappServiceProviderDto(ServiceProvider sp) {
 	    	
 	    	ServiceProviderDto spd= new ServiceProviderDto();
@@ -251,8 +250,9 @@ public class UserService {
 			if(adds!=null &&adds.size()!=0) {
 			 ads= adds.get(0);
 			 newaddres.setId(ads.getId());
-			 newaddres.setUser(user);
 			}
+				newaddres.setUser(user);	
+			
 	
 			return mapptoAdress(addressRepositry.save(newaddres));
 	    }
