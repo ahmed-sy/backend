@@ -27,7 +27,7 @@ public class MService {
     @Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private	Long id;	
+    private	long id;	
    
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="service_provider_id", nullable=false)

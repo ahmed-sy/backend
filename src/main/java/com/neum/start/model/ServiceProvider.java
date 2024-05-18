@@ -26,7 +26,7 @@ public class ServiceProvider {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private	Long id;
+    private	long id;
 	
 	@OneToOne
 	@JoinColumn(name="user_id")

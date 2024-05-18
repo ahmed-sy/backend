@@ -120,6 +120,15 @@ public class UserService {
 	return  mappUserDto(userRepository.save(user));
    }
    
+   public UserDto editUserType(int type) {
+	   if(!(type>0&&type<=2)) {
+		   return null;
+	   }
+       User user=getLogedUser();
+       user.setType(type);
+	return  mappUserDto(userRepository.save(user));
+   }
+   
    public Product addProduct(Product prod) {
 	   User user=getLogedUser();
 	   ServiceProvider sp=serviceProviderRepository.findByUser(user);
@@ -130,6 +139,14 @@ public class UserService {
 		   sp3.setUser(user);
 		   sp = serviceProviderRepository.save(sp3);
 	               }
+//	   else {
+//	            	   List<MService> mList= mServiceRepository.findByServiceProvider(sp); 
+//	            	   Long prodId=prod1.get().getId();
+//	            	   mList.stream().filter(m-> prodId.equals( m.getService().getId()));
+//	            	   if(!mList.isEmpty()||mList.size()>0) {
+//	            		   return null;  
+//	            	   }
+//	               }
 	   MService m= new MService();
 	   m.setServiceProvider(sp);
 	   m.setService(prod1.get());
@@ -210,6 +227,7 @@ public class UserService {
 		adressDto.setId(ads.getId());
 		adressDto.setStreet(ads.getStreet());
 		adressDto.setHaus_number(ads.getHaus_number());
+		adressDto.setCity(ads.getCity());
 		adressDto.setCountry(ads.getCountry());
 		adressDto.setPlz(ads.getPlz());
 		adressDto.setLatitude(ads.getLatitude());

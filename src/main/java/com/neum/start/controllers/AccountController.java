@@ -70,4 +70,10 @@ public class AccountController {
 	         return new ResponseEntity<AdressDto>(newServiceProvider, HttpStatus.OK);
 	  
         }
+	  @PutMapping("/type")
+	    ResponseEntity<UserDto> editUserType(@RequestBody int request) {
+		 
+		  UserDto newServiceProvider=	userService.editUserType(request);
+	         return new ResponseEntity<UserDto>(newServiceProvider, HttpStatus.OK);
+	    }
 }
