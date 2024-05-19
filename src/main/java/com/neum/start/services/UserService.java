@@ -3,6 +3,7 @@ package com.neum.start.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import com.neum.start.model.dto.CreateServiceProvider;
 import com.neum.start.model.dto.Edit;
 import com.neum.start.model.dto.EditUser;
 import com.neum.start.model.dto.MServiceDto;
+import com.neum.start.model.dto.ProviderDataDto;
 import com.neum.start.model.dto.ReviewDto;
 import com.neum.start.model.dto.ServiceProviderDto;
 import com.neum.start.model.dto.UserDetailsResponse;
@@ -139,14 +141,14 @@ public class UserService {
 		   sp3.setUser(user);
 		   sp = serviceProviderRepository.save(sp3);
 	               }
-//	   else {
-//	            	   List<MService> mList= mServiceRepository.findByServiceProvider(sp); 
-//	            	   Long prodId=prod1.get().getId();
-//	            	   mList.stream().filter(m-> prodId.equals( m.getService().getId()));
-//	            	   if(!mList.isEmpty()||mList.size()>0) {
-//	            		   return null;  
-//	            	   }
-//	               }
+	   else {
+	            	   List<MService> mList= sp.getServices(); 
+	            	   Long prodId=prod1.get().getId();
+	            	   mList.stream().filter(m-> prodId.equals( m.getService().getId())).collect(Collectors.toList());
+	            	   if(!mList.isEmpty()||mList.size()>0) {
+	            		   return null;  
+	            	   }
+	               }
 	   MService m= new MService();
 	   m.setServiceProvider(sp);
 	   m.setService(prod1.get());
@@ -294,6 +296,22 @@ public class UserService {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	       String userName = authentication.getName();
 	     return getUserByEmail(userName);
+	}
+	public ProviderDataDto  getProviderData(long request) {
+	ProviderDataDto pdd=new ProviderDataDto();
+	Optional<User> user=	userRepository.findById(request);
+	if (user.isPresent()) {
+	List<Address> ads = user.get().getAddress();
+	pdd.setId(request);
+	pdd.setFirstName(user.get().getFirstName());
+	pdd.setLastName(user.get().getLastName());
+	if(!ads.isEmpty()&&ads.size()>0 ) {
+	pdd.setCity(ads.get(0).getCity());
+	pdd.setPlz(ads.get(0).getPlz());
+	pdd.setCountry(ads.get(0).getCountry());
+	}
+	}
+		return pdd;
 	}
 	
 	

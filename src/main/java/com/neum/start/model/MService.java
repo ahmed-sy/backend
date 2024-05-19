@@ -29,11 +29,11 @@ public class MService {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private	long id;	
    
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name="service_provider_id", nullable=false)
+    @ManyToOne()
+    @JoinColumn(name="service_provider_id")
     private	ServiceProvider serviceProvider;	
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="service_id", nullable=false)
     private	Product service;	
 }

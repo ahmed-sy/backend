@@ -71,7 +71,7 @@ public class SecurityConfig  {
                     auth.requestMatchers("/error/**").permitAll();
 						auth.requestMatchers("/api/v1/auth/**").permitAll();
 						auth.requestMatchers("/api/v1/service/**").permitAll();
-						auth.requestMatchers("/api/v1/new-user/**").permitAll();
+						auth.requestMatchers("/api/v1/user/**").permitAll();
 						auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();                   
 						auth.anyRequest().authenticated();
                 })
